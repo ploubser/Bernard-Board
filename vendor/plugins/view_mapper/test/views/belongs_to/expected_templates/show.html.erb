@@ -1,0 +1,17 @@
+<p>
+  <b>Name:</b>
+  <%=h @child_model.name %>
+</p>
+
+<p>
+  <b>Parent Model:</b>
+  <%=h @child_model.parent_model_name %>
+</p>
+
+<p>
+  <b>Second Parent Model:</b>
+  <%=h @child_model.second_parent_model_other_field %>
+</p>
+
+<%= link_to 'Edit', edit_child_model_path(@child_model) %> |
+<%= link_to 'Back', child_models_path %>

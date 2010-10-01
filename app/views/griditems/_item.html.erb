@@ -1,0 +1,35 @@
+<% if @timestamp.nil? || @timestamp == ""%>
+    <% @timestamp = "#{Time.now.to_i}#{rand(16)}#{rand(10)}#{rand(10)}#{rand(10)}" %>
+<% end %>
+
+
+<%= @parameter_list = "" %>
+<div class="item" id="item<%= @timestamp%>" style="height:<%= @dimentions[0]%>px;width:<%=@dimentions[1] %>px;border:solid 2px;postion:absolute;" onmousemove="enableEvents('item<%= @timestamp%>')" >
+    <%= render :partial => "griditems/plugins/#{@type.downcase}/#{@type.downcase}", :locals => {:parameters => @parameters}%>
+    <%= form_tag 'index' %>
+    <% @parameters.each do |p| %>
+        <% unless p.to_s =~/.*authenticity.*|.*action.*|.*controller.*|.*height.*|.*refresh_rate.*|.*width.*|.*create.*|.*type.*|.*title.*|.*update.*/ %>
+            <% @parameter_list += "#{p[0]}:#{p[1]};".gsub("http://", "")%> 
+        <% end %>
+    <% end %>
+    
+</div>
+
+<%= javascript_tag "saveDetails('item#{@timestamp}', '#{@parameter_list}', '#{@type}', '#{@refresh_rate}', '#{@title}', '#{@dimentions[0]}', '#{@dimentions[1]}');" %>
+
+<% if @state == "view" %>
+    <% unless @type == "Gauge"%>
+        <% unless @refresh_rate == 0 %>
+            <%= periodically_call_remote :url => {:action => :refresh, :id => "item#{@timestamp}", :type => @type, :parameters => @parameter_list, :title => @title}, :frequency => @refresh_rate%>
+        <% end %>
+    <% else%>
+            <%= periodically_call_remote :url => {:action => "redraw_gauge",  :id => "item#{@timestamp}", :type => @type, :parameters => @parameter_list, :title => @title}, :frequency => @refresh_rate %>
+    <% end %>
+    <%= javascript_tag "initItems('item#{@timestamp}', 'content#{@timestamp}', '#{@type}', 'view')" %>
+<% else %>
+    <%= javascript_tag "initItems('item#{@timestamp}', 'content#{@timestamp}', '#{@type}', 'config')" %>
+<% end %>
+
+<% unless @position.nil? || @position =="" %>
+    <%= javascript_tag "positionItem('item#{@timestamp}','#{@position[0]}','#{@position[1]}');" %>
+<% end %>

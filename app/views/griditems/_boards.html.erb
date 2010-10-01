@@ -1,0 +1,15 @@
+<% list = Board.find(:all) %>
+<table>
+    <th> Name </th>
+    <th> Created on </th>
+    <th> Updated on </th>
+    <th> Options </th>
+    <% list.each do |l| %>
+        <tr>
+            <td> <%= link_to_remote l.name, :url => {:action => "load_board"}, :html => {:class=> "board_item"}, :with => "'name=' + '#{l.name}' + '&state=config'" %> </td>
+            <td> <%= l.created_at.strftime("%m/%d/%Y") %> </td>
+            <td> <%= l.updated_at.strftime("%m/%d/%Y") %> </td>
+            <td> <%= link_to_remote "Delete Board", :url => {:action => "delete_board"}, :html => {:class => "board_item"}, :with => "'name=' + '#{l.name}'" %> </td>
+        </tr>
+    <% end %>
+</table>

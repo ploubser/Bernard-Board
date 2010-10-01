@@ -1,0 +1,23 @@
+<p>
+  <b>First name:</b>
+  <%=h @test_model.first_name %>
+</p>
+
+<p>
+  <b>Last name:</b>
+  <%=h @test_model.last_name %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%=h @test_model.address %>
+</p>
+
+<p>
+  <b>Some flag:</b>
+  <%=h @test_model.some_flag %>
+</p>
+
+
+<%= link_to 'Edit', edit_test_model_path(@test_model) %> |
+<%= link_to 'Back', test_models_path %>

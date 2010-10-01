@@ -1,0 +1,22 @@
+<div class="child">
+  <p>
+    SecondChildModel <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+  </p>
+  <p>
+    SecondChildModel <%= f.label :last_name %><br />
+    <%= f.text_field :last_name %>
+  </p>
+  <p>
+    SecondChildModel <%= f.label :address %><br />
+    <%= f.text_field :address %>
+  </p>
+  <p>
+    SecondChildModel <%= f.label :some_flag %><br />
+    <%= f.check_box :some_flag %>
+  </p>
+  <p>
+    <%= f.hidden_field :_destroy, :class => 'delete' %>
+    <%= remove_child_link 'remove', f %>
+  </p>
+</div>

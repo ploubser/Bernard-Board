@@ -1,0 +1,7 @@
+<div class="ui-widget-header">
+    <center><%= params["title"] %></center>
+</div>
+
+<div id="con<%= @timestamp%>" style="height:100%;width:100%" class="twitter">
+    <%= javascript_tag "loadFeedControl('con#{@timestamp}', '#{params["url"]}')" %> 
+</div>

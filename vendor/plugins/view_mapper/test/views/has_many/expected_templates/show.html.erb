@@ -1,0 +1,37 @@
+<p>
+  <b>Name:</b>
+  <%=h @parent_model.name %>
+</p>
+
+<% @parent_model.child_models.each do |child_model| %>
+  <div class="child">
+    <p>
+      <b>ChildModel Name:</b>
+      <%=h child_model.name %>
+    </p>
+  </div>
+<% end %>
+
+<% @parent_model.second_child_models.each do |second_child_model| %>
+  <div class="child">
+    <p>
+      <b>SecondChildModel First name:</b>
+      <%=h second_child_model.first_name %>
+    </p>
+    <p>
+      <b>SecondChildModel Last name:</b>
+      <%=h second_child_model.last_name %>
+    </p>
+    <p>
+      <b>SecondChildModel Address:</b>
+      <%=h second_child_model.address %>
+    </p>
+    <p>
+      <b>SecondChildModel Some flag:</b>
+      <%=h second_child_model.some_flag %>
+    </p>
+  </div>
+<% end %>
+
+<%= link_to 'Edit', edit_parent_model_path(@parent_model) %> |
+<%= link_to 'Back', parent_models_path %>

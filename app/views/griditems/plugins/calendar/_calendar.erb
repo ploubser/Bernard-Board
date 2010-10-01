@@ -1,0 +1,6 @@
+<div class="ui-widget-header">
+    <%= @title %>
+</div>
+<% calendar(@parameters["usrname"], @parameters["passwrd"]).each_with_index do |event, i| %>
+    <%=  event.title %> - <%= event.start_time.strftime("%a %d-%m-%Y %H:%M")%><br>
+<% end %>

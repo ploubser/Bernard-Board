@@ -1,0 +1,188 @@
+.ui-widget-header{
+	text-align:center;
+}
+
+#screen{
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:100%;
+	height:100%;
+}
+
+#container{
+	height:100%;
+	width:100%;
+	position:inherit;
+}
+
+#boards_table{
+	height:50%;
+	width:50%;
+	position:absolute;
+	background-color:black;
+	font-family:helvetica, impact, sans-serif;
+	font-weight:bold;
+	border:none;
+	top:30%;
+	left:25%;
+
+}
+
+#options{
+	height:25%;
+	width:30%;
+	left:0px;
+	top:0px;
+	z-index:100;
+}
+
+.optionscontents{
+	height:100%;
+	width:100%;
+	float:left;
+	top:0px;
+	left:0px;
+	background-color:grey;
+	
+}
+
+.optionbox-item{
+	height:100%;
+	float:left;
+	width:33.33334%;
+}
+
+.footer{
+	position:absolute;
+	bottom:0%;
+	width:100%;
+}
+
+.item{
+	font-style:bold;
+	overflow:hidden;
+}
+
+/************************************/
+.gfg-title{
+	visibility:hidden;
+}
+
+.gf-title{
+}
+
+.gf-author{
+}
+
+.gf-spacer{
+}
+
+.gf-relativePublishedDate{
+}
+
+.gf-snippet{
+}
+
+.gfg-entry{
+	visibility:false;
+	font-size:100%;
+	padding:0px 0px 5px;
+}
+
+.gfg-listentry{
+	visibility:false;
+	font-size:75%;
+}
+
+.gfg-listentry-highlight{
+	font-size:100%
+}
+/**********************************/
+
+.circle{
+	display :block;
+	display :block;
+	width :50px;
+	height :50px;
+	-moz-border-radius: 25px; 
+	-webkit-border-radius: 25px;
+}
+
+
+.popup{  
+	display:none;  
+ 	position:fixed;  
+ 	_position:absolute; /* hack for internet explorer 6*/ 
+ 	height:384px;  
+	width:408px;  
+	background:#FFFFFF;  
+ 	border:2px solid #cecece;  
+ 	z-index:1;  
+ 	padding:12px;  
+	font-size:13px;  
+}
+
+.popup h1{  
+	text-align:left;  
+	color:#6FA5FD;  
+	font-size:22px;  
+	font-weight:700;  
+	border-bottom:1px dotted #D3D3D3;  
+	padding-bottom:2px;  
+	margin-bottom:20px;  
+	 
+} 
+
+.popup a.popupClose{
+	font-size:14px;  
+	line-height:14px;  
+	right:6px;  
+	top:4px;  
+	position:absolute;  
+	color:#6fa5fd;  
+	font-weight:700;  
+	display:block;
+}
+
+.popup a.board_item{
+	font-size:14px;
+	line-height:14px;
+	color:#6fa5fd;
+	font-weight:700;
+	display:block;
+}
+
+.feed{
+	background-color:#111111;
+	font-style:helvetica impact serif;
+	font-weight:bold;
+}
+
+#vmenu{
+	width:9em;
+	height:4em;
+	position:absolute;
+	background:#838B8B;
+	display:none;font-size:0.75em;
+}
+
+.vmenuitem {
+	
+	width:8em;
+	height:1em;
+	display:block;
+	padding:0.5em 0.5em;
+	cursor:pointer;
+	background:black;
+	font-style:helvitica impact serif;
+	font-weight:bold;
+	font-size:1em;
+}
+.create {
+	visibility:show;
+}
+
+.update {
+	display:none;
+}

@@ -1,0 +1,27 @@
+<h1>Editing test_model</h1>
+
+<% form_for(@test_model) do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :first_name %><br />
+    <%= text_field_with_auto_complete :test_model, :first_name, {}, { :method => :get } %>
+  </p>
+  <p>
+    <%= f.label :last_name %><br />
+    <%= text_field_with_auto_complete :test_model, :last_name, {}, { :method => :get } %>
+  </p>
+  <p>
+    <%= f.label :address %><br />
+    <%= f.text_field :address %>
+  </p>
+  <p>
+    <%= f.label :some_flag %><br />
+    <%= f.check_box :some_flag %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @test_model %> |
+<%= link_to 'Back', test_models_path %>

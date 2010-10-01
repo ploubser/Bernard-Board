@@ -1,0 +1,19 @@
+<% feed = get_feed(@parameters["url"])%>
+
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        <%= @parameters["title"] %>
+    </div>
+    
+    <div id="feed-top">
+        <%= image_tag "rss_icon.gif", :html => {"align" => "left"}%>
+        <%= feed.items.first.title %><br>
+        <small> Added on <%= feed.items.first.date.strftime('%m/%d/%Y')%> </small>
+        <HR>
+        
+        <div id="feed-description"><%= feed.items.first.description.gsub(/<[^>]+>/,"").squeeze(" ").strip %></div>
+    </div>
+</div>
+
+
+

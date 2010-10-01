@@ -1,0 +1,20 @@
+<h1>Listing parent_models</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+<% @parent_models.each do |parent_model| %>
+  <tr>
+    <td><%=h parent_model.name %></td>
+    <td><%= link_to 'Show', parent_model %></td>
+    <td><%= link_to 'Edit', edit_parent_model_path(parent_model) %></td>
+    <td><%= link_to 'Destroy', parent_model, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New parent_model', new_parent_model_path %>

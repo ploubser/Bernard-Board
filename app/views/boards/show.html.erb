@@ -1,0 +1,18 @@
+<p>
+  <b>Name:</b>
+  <%=h @boards.name %>
+</p>
+
+<p>
+  <b>Width:</b>
+  <%=h @boards.width %>
+</p>
+
+<p>
+  <b>Height:</b>
+  <%=h @boards.height %>
+</p>
+
+
+<%= link_to 'Edit', edit_boards_path(@boards) %> |
+<%= link_to 'Back', boards_path %>

@@ -1,0 +1,54 @@
+=View Mapper
+
+View_mapper will generate scaffolding for new or existing models, customized for the plugins or Rails features you use in your application.
+
+When you run the "view_for" generator, View Mapper will generate the view scaffolding code for your model, enhanced to use the specified plugin or feature with your model's attributes. For example:
+
+  script/generate view_for office --view auto_complete:address
+
+...will generate an "auto_complete view" for your existing office model. This is scaffolding that uses the attributes for your office model, and with code added to use the auto_complete plugin for the address field.
+
+  script/generate view_for song --view paperclip
+
+...will generate a "paperclip view" for your existing song model. This is scaffolding that will support viewing and editing your song model and its Paperclip attachments. It's a good way to learn how to use Paperclip if you aren't familiar with it yet.
+
+Currently View Mapper supports views for the auto_complete and paperclip plugins, and views that contain complex forms for editing multiple associated models. If you don't specify any view then View Mapper by default will generate standard Rails scaffolding.
+
+If you also want to create a new model at the same time, then use a second View Mapper generator called "scaffold_for_view" and provide the model's attributes in the usual way:
+
+  script/generate scaffold_for_view office address:string code:string --view auto_complete:address
+
+== Installation:
+
+  gem sources -a http://gemcutter.org
+  sudo gem install view_mapper
+
+== Usage:
+
+  script/generate view_for model [ --view view_name[:param] ]
+
+This will generate scaffolding for an existing model. If you provide a view parameter, then View Mapper will enhance the scaffolding to use the specified plugin or feature with your model.
+
+  script/generate scaffold_for_view model attributes [ --view view_name[:param] ]
+
+This is the same as view_for, but will also generate a new model at the same time.
+
+== Views
+
+{auto_complete}[http://patshaughnessy.net/2009/10/1/auto_complete-scaffolding]: Generates scaffolding that uses the standard Rails auto_complete plugin for type ahead behavior.
+
+{paperclip}[http://patshaughnessy.net/2009/10/16/paperclip-scaffolding]: Generates scaffolding that uses Paperclip to upload and download files.
+
+{has_many}[http://patshaughnessy.net/2009/11/9/scaffolding-for-complex-forms-using-nested-attributes]: Generates scaffolding for a complex form to edit two or more associated models.
+
+{has_many_auto_complete}[http://patshaughnessy.net/2009/11/25/scaffolding-for-auto-complete-on-a-complex-nested-form]: This is the same as "has_many" but also uses the auto_complete plugin to implement type ahead behavior for each text field. This view requires you to install the {repeated_auto_complete}[http://patshaughnessy.net/repeated_auto_complete] plugin.
+
+{belongs_to}[http://patshaughnessy.net/2010/1/25/creating-associations-to-existing-data-part-1-belongs_to-scaffolding]: Generates scaffolding that allows you to select an existing, associated model.
+
+{belongs_to_auto_complete}[http://patshaughnessy.net/2010/2/13/creating-associations-to-existing-data-part-2-belongs_to-with-auto_complete]: Generates scaffolding that allows you to select an existing, associated model using auto_complete.
+
+{has_many_existing}[http://patshaughnessy.net/2010/4/4/creating-associations-to-existing-data-part-3-has_many-through-scaffolding]: Generates scaffolding for a complex form to edit two models that have a has_many, :through association with a third model. Use this if you have a many-many relationship with existing data.
+
+== Examples
+
+For detailed examples and more information see: http://patshaughnessy.net/view_mapper
