@@ -12,7 +12,6 @@ module ApplicationHelper
 
     def get_javascript
         javascript = Dir.glob("/home/psy/code/stomp/trunk/bernardboard/public/javascripts/*.js")
-        require 'pp'
         javascript.each_with_index do |item, i|
             if item =~/.*javascripts\/(.+)/
                 javascript[i] = $1

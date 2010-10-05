@@ -1,6 +1,8 @@
 var popup = 0; //show popup = false
 var gaugeArray = new Object;
 var lastTarget = ""; //last clicked item
+var currentFeed = 0
+var feedSize = 0
 
 //Gauge plugin
 google.load('visualization', '1', {packages:['gauge']});
@@ -194,27 +196,9 @@ function initItems(item, content, type, state) {
 
 		jQuery(e).resizable({ handles: 'nw, ne, sw,se' , 
 				      containment: jQuery('.container'), 
-				      stop: function(e){
-				      	var max = 18;
-					jQuery(this).wrapInner('<div id="fontfit"></div>');
-					var dheight = jQuery(this).height();
-					var cheight = jQuery("#fontfit").height();
-					var fsize = ((jQuery(this).css("font-size")).slice(0,-2))*1;
-					while(cheight<dheight && fsize<max) {
-						fsize+=1;
-						jQuery(this).css("font-size",fsize+"px");
-						cheight = jQuery("#fontfit").height();
-					}
-					while(cheight>dheight || fsize>max) {
-						fsize-=1;
-						jQuery(this).css("font-size",fsize+"px");
-						cheight = jQuery("#fontfit").height();
-					}
-					//jQuery("#fontfit").replaceWith(jQuery("#fontfit").html());
-					//return this;
 				   }					
 				     
-		});
+		);
 
 		jQuery(".item").bind("contextmenu", function(e) {
 			jQuery("#vmenu").css({
@@ -282,15 +266,38 @@ function positionItem(item, x, y){
 	jQuery(i).offset({top : y, left : x })
 }
 
-function shrink(){
-var feed_description_span = document.getElementById("feed-discription-span");
-        var feed_description = document.getElementById("feed-discription");
+//Resize feed and twitter plugin text 
+function resizeText(container){
+	var max = 12;
+	jQuery('#feed-description' + currentFeed).wrapInner('<div id="fontfit' + currentFeed + '"></div>');
+	var dheight = jQuery(container).height() - jQuery('#feed-header' + currentFeed).height();
+	var cheight = jQuery("#fontfit" + currentFeed).height();
+	var fsize = ((jQuery('#feed-description' + currentFeed).css("font-size")).slice(0,-2))*1;
+	while(cheight<dheight-jQuery(container).css("borderWidth").slice(0,-2)*2 && fsize<max) {
+		fsize+=1;
+		jQuery('#feed-description' + currentFeed).css("font-size",fsize+"px");
+		cheight = jQuery("#fontfit" + currentFeed).height();
+	}
+	while(cheight>dheight-jQuery(container).css("borderWidth").slice(0,-2)*2 || fsize>max && fsize > 1) {
+		fsize-=1;
+		jQuery('#feed-description' + currentFeed).css("font-size",fsize+"px");
+		cheight = jQuery("#fontfit"+ currentFeed).height();
+	}
+}
 
-        feed_discription_span.style.fontSize = 64;
-
-        while(feed_discription_span.offsetHeight > feed_discription.offsetHeight)
-        {
-                feed_discription_span.style.fontSize = parseInt(feed_discription_span.style.fontSize) - 1;
-        }
-   }
-
+function update_feed(size){
+	jQuery('#feed0').show();
+	feedSize = size;
+	setInterval(function(){
+		jQuery('.feed').hide();
+		jQuery('#feed' + currentFeed).show();
+		container = jQuery('#feed' + currentFeed).parent().parent();
+		resizeText(container)
+		if(currentFeed < feedSize -1){
+			currentFeed++
+		}
+		else{
+			currentFeed = 0;
+		}
+	}, 1000);
+}

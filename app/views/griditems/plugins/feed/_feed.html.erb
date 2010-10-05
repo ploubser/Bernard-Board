@@ -4,16 +4,20 @@
     <div class="ui-widget-header">
         <%= @parameters["title"] %>
     </div>
-    
-    <div id="feed-top">
-        <%= image_tag "rss_icon.gif", :html => {"align" => "left"}%>
-        <%= feed.items.first.title %><br>
-        <small> Added on <%= feed.items.first.date.strftime('%m/%d/%Y')%> </small>
-        <HR>
+
+    <% feed.items.each_with_index do |topic,i| %>
+        <div id="feed<%=i%>" class="feed" style="display:none;">
+            <div id="feed-header<%=i%>" 
+                <%= image_tag "rss_icon.gif", :html => {"align" => "left"}%>
+                <%= topic.title %><br>
+                <small> Added on <%= topic.date.strftime('%m/%d/%Y')%> </small>
+                <HR>
+            </div>
         
-        <div id="feed-description"><%= feed.items.first.description.gsub(/<[^>]+>/,"").squeeze(" ").strip %></div>
-    </div>
+            <div id="feed-description<%=i%>"><%= topic.description.gsub(/<[^>]+>/,"").squeeze(" ").strip %></div>
+        </div>
+    <% end %>
 </div>
 
-
+<%= javascript_tag "update_feed(#{feed.items.size})"%>
 
