@@ -1,7 +1,18 @@
-<div class="ui-widget-header">
-    <center><%= params["title"] %></center>
+<% feed = get_feed(@parameters["url"])%>
+
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        <%= @parameters["title"] %>
+    </div>
+
+    <% feed.items.each_with_index do |topic,i| %>
+        <div id="twitterfeed<%=i%>" class="twitterfeed" style="display:none;">
+                <%= image_tag "twitter_icon.gif", :html => {"align" => "left"}%>
+                <%= topic.title %><br>
+                <small> Added on <%= topic.date.strftime('%m/%d/%Y')%> </small>
+        </div>
+    <% end %>
 </div>
 
-<div id="con<%= @timestamp%>" style="height:100%;width:100%" class="twitter">
-    <%= javascript_tag "loadFeedControl('con#{@timestamp}', '#{params["url"]}')" %> 
-</div>
+<%= javascript_tag "update_twitterfeed(#{feed.items.size})"%>
+

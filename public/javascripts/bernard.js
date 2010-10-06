@@ -1,8 +1,8 @@
 var popup = 0; //show popup = false
 var gaugeArray = new Object;
 var lastTarget = ""; //last clicked item
-var currentFeed = 0
-var feedSize = 0
+//var currentFeed = 0
+//var feedSize = 0
 
 //Gauge plugin
 google.load('visualization', '1', {packages:['gauge']});
@@ -267,7 +267,7 @@ function positionItem(item, x, y){
 }
 
 //Resize feed and twitter plugin text 
-function resizeText(container){
+function resizeText(container, currentFeed){
 	var max = 12;
 	jQuery('#feed-description' + currentFeed).wrapInner('<div id="fontfit' + currentFeed + '"></div>');
 	var dheight = jQuery(container).height() - jQuery('#feed-header' + currentFeed).height();
@@ -287,17 +287,47 @@ function resizeText(container){
 
 function update_feed(size){
 	jQuery('#feed0').show();
-	feedSize = size;
-	setInterval(function(){
+	var feedSize = size;
+	var currentFeed = 0;
+	var container = null
+	var interval = setInterval(function(){
 		jQuery('.feed').hide();
 		jQuery('#feed' + currentFeed).show();
 		container = jQuery('#feed' + currentFeed).parent().parent();
-		resizeText(container)
+		//This deals with the sudden descruction of the dom object
+		//Implemented to handle delete from rightclick menu
+		if(jQuery(container).attr("id") == null){
+			clearInterval(interval);
+		}
+		else{
+			resizeText(container, currentFeed);
+		}
 		if(currentFeed < feedSize -1){
-			currentFeed++
+			currentFeed++;
 		}
 		else{
 			currentFeed = 0;
 		}
-	}, 1000);
+	}, 10000);
+}
+
+function update_twitterfeed(size){
+	jQuery('#twitterfeed0').show();
+	var feedSize = size;
+	var currentFeed = 0;
+	var interval = setInterval(function(){
+		jQuery('.twitterfeed').hide();
+		jQuery('#twitterfeed' + currentFeed).show();
+		//This deals with the sudden destruction of the dom object
+		//Implemented to handle delete from rightclick menu
+		if(jQuery('#twitterfeed' + currentFeed).attr("id") == null){
+			clearInterval(interval);
+		}
+		if(currentFeed < feedSize -1){
+			currentFeed++;
+		}
+		else{
+			currentFeed = 0;
+		}
+	}, 10000);
 }
