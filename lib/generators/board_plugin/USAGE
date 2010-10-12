@@ -1,0 +1,4 @@
+Creates a skeleton for your board plugin.
+
+Usage :
+	script/generate board_plugin [pluginname]

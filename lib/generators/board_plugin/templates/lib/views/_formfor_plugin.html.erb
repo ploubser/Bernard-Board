@@ -1,0 +1,6 @@
+<% form_remote_tag :html => { :action => url_for(:controller => "griditems", :action =>"create_grid_item"), :id => "form_for"} do %>
+    <!-- Your form goes here -->
+    <%= hidden_field_tag "refresh_rate", "0" %>
+    <%= submit_to_remote "create_grid_item", "Create", :url => {:action => "create_grid_item", :type => type}, :html => {:class => "create"} %> <br>
+    <%= submit_to_remote "update_grid_item", "Update", :url => {:action => "update_grid_item", :type => type}, :html => {:class => "update"} %>
+<% end %>
