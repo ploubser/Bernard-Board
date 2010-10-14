@@ -1,0 +1,23 @@
+<% feed = get_feed(@parameters["url"])%>
+
+<div class="ui-widget">
+    <div class="ui-widget-header">
+        <%= @parameters["title"] %>
+    </div>
+
+    <% feed.items.each_with_index do |topic,i| %>
+        <div id="feed<%=i%>" class="feed" style="display:none;">
+            <div id="feed-header<%=i%>" 
+                <%= image_tag "rss_icon.gif", :html => {"align" => "left"}%>
+                <%= topic.title %><br>
+                <small> Added on <%= topic.date.strftime('%m/%d/%Y')%> </small>
+                <HR>
+            </div>
+        
+            <div id="feed-description<%=i%>"><%= topic.description.gsub(/<[^>]+>/,"").squeeze(" ").strip %></div>
+        </div>
+    <% end %>
+</div>
+
+<%= javascript_tag "update_feed(#{feed.items.size})"%>
+

@@ -19,4 +19,14 @@ module ApplicationHelper
         end
         return javascript
     end
+
+    def get_stylesheets
+        stylesheets = Dir.glob("public/stylesheets/*.css")
+        stylesheets.each_with_index do |item, i|
+            if item =~/.*stylesheets\/(.+)/
+                stylesheets[i] = $1
+            end
+        end
+        return stylesheets
+    end
 end

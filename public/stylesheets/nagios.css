@@ -1,0 +1,8 @@
+.circle{
+	display :block;
+	display :block;
+	width :50px;
+	height :50px;
+	-moz-border-radius : 25px;
+	-webkit-border-radius : 25px;
+}

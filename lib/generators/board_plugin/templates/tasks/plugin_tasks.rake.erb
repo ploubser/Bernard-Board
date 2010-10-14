@@ -1,8 +1,9 @@
 namespace :<%= plugin_name.to_sym%> do
     desc "Sync plugin files with Bernard-Board"
     task :sync do
-        a = system "rsync -ruv vendor/plugins/<%= plugin_name %>/lib/views/* app/views/griditems/plugins/<%= plugin_name %>"
-        a = system "rsync -ruv vendor/plugins/<%= plugin_name%>/lib/javascripts/* public/javascripts"
+        a = system "rsync -ruv vendor/plugins/bernard_<%= plugin_name %>/lib/views/* app/views/griditems/plugins/<%= plugin_name %>"
+        a = system "rsync -ruv vendor/plugins/bernard_<%= plugin_name%>/lib/javascripts/* public/javascripts"
+        a = system "rsync -ruv vendor/plugins/bernard_<%= plugin_name%>/lib/stylesheets/* public/stylesheets"
         if a == true
             system "echo '\n\nSync was successful!'"
         else

@@ -1,10 +1,6 @@
 var popup = 0; //show popup = false
-var gaugeArray = new Object;
 var lastTarget = ""; //last clicked item
 
-//Gauge plugin
-google.load('visualization', '1', {packages:['gauge']});
-google.load("feeds", "1");
 
 jQuery(document).ready(function() {
 	jQuery('.options').draggable({'revert' : false, 'zindex' : 350})
@@ -218,69 +214,8 @@ function initItems(item, content, type, state) {
 	}
 }
 
-//These methods are the same, implemented twice to conceptually distinguish between twitter feeds and normal feeds. Trying to implement better twitter plugin.
-function loadFeedControl(div, feed) {
-	var options = {
-	    numResults : 8
-	      }
-	var fg = new GFdynamicFeedControl("http://" + feed.replace("http://", ""), div, options);
-}
-
-function loadTwitterFeedControl(div, feed) {
-	var twitterfeed = feed;
-	var options = {numResults : 8
-	}
-	var fg = new GFdynamicFeedControl("http://" + twitterfeed.replace("http://", ""), div, options)
-}
-
-//Gauge plugin JS. Port to another file
-function drawChart(_height, _width, value, div, title) {
-	gaugeArray[div] = new google.visualization.Gauge(document.getElementById(div));
-	gaugeArray[div]['data'] = new google.visualization.DataTable();
-	gaugeArray[div]['data'].addColumn('number', title);
-	gaugeArray[div]['data'].addRows(1);
-	gaugeArray[div]['data'].setCell(0,0,100); 
-
-	gaugeOptions = {
-	min: 0,
-	max: 100,
-	yellowFrom: 70,
-	yellowTo: 90,
-	redFrom: 90,
-	redTo: 100
-	};
-	gaugeArray[div].draw(gaugeArray[div]['data'], gaugeOptions);
-}
-
-//Gauge plugin, look at evals
-function redrawGauge(value, div){
-	gaugeArray[div]['data'].setValue(0,0,value);
-	gaugeArray[div].draw(gaugeArray[div]['data'], gaugeOptions);
-}
-
 //Need this to reposition items after a state has been reloaded
 function positionItem(item, x, y){
 	i = document.getElementById(item)
 	jQuery(i).offset({top : y, left : x })
-}
-
-function update_twitterfeed(size){
-	jQuery('#twitterfeed0').show();
-	var feedSize = size;
-	var currentFeed = 0;
-	var interval = setInterval(function(){
-		jQuery('.twitterfeed').hide();
-		jQuery('#twitterfeed' + currentFeed).show();
-		//This deals with the sudden destruction of the dom object
-		//Implemented to handle delete from rightclick menu
-		if(jQuery('#twitterfeed' + currentFeed).attr("id") == null){
-			clearInterval(interval);
-		}
-		if(currentFeed < feedSize -1){
-			currentFeed++;
-		}
-		else{
-			currentFeed = 0;
-		}
-	}, 10000);
 }

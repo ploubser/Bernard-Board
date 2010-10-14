@@ -3,7 +3,6 @@ module GriditemsHelper
     require 'uri'
     require 'rubygems'
     require 'nokogiri'
-    require 'gcal4ruby'
     
     # Helper implements the nagios plugin
     def nagios(url, username, password, title)
@@ -47,12 +46,6 @@ module GriditemsHelper
         </div>
         </body>"
         return circle
-    end
-
-    def calendar(username, password)
-        service = GCal4Ruby::Service.new
-        service.authenticate(username, password)
-        return service.events
     end
 
     def get_remote_file(remote_server, file)
