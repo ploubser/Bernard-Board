@@ -8,7 +8,6 @@
 <% end %>
 
 <% stylesheets = get_stylesheets %>
-<%= javascript_tag "alert('#{stylesheets}')" %>
 <% stylesheets.each do |stylesheet| %>
     <%= stylesheet_link_tag "#{stylesheet}" %>
 <% end %>
