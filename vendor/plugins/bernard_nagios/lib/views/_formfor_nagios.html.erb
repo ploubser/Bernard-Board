@@ -6,6 +6,6 @@
     Nagios User Name : <%= text_field_tag "username"%> <br>
     Nagios Password : <%= text_field_tag "password"%> <br>
     Refresh (in seconds): <%= text_field_tag "refresh_rate", "", :size=>10, :id => "height" %> <br>
-    <%= submit_to_remote "create_grid_item", "Update", :url => {:action => "create_grid_item", :type => type}, :html => {:class => "create"} %> <br>
-    <%= submit_to_remote "update_grid_item", "Update", :url => {:action => "update_grid_item", :type => type}, :html => {:class => "update"} %>
+    <%= submit_to_remote "create_grid_item", "Update", :url => {:action => "create_grid_item", :type => type}, :html => {:class => "create"}, :condition => "validateForm()" %> <br>
+    <%= submit_to_remote "update_grid_item", "Update", :url => {:action => "update_grid_item", :type => type}, :html => {:class => "update"}, :condition => "validateForm()" %>
 <% end %>

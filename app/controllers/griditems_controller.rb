@@ -130,7 +130,6 @@ class GriditemsController < ApplicationController
               tmp = p.split(/:/, 2)
               @parameters[tmp[0]] = tmp[1]
             end
-            RAILS_DEFAULT_LOGGER.debug @parameters.inspect
             @position = [item.x_axis, item.y_axis]
             @state = params[:state]
             page.insert_html :bottom, :container, :partial => "item"

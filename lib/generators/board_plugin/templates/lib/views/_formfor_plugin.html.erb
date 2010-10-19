@@ -1,4 +1,4 @@
-<% form_remote_tag :html => { :action => url_for(:controller => "griditems", :action =>"create_grid_item"), :id => "form_for"} do %>
+<% form_remote_tag :html => { :action => url_for(:controller => "griditems", :action =>"create_grid_item"), :id => "form_for"} do %>"
     <! -- Required form elements -->
     Title : <%= text_field_tag "title" %> <br> 
     Width : <%= text_field_tag "width", "", :size=>4%><br>
@@ -7,6 +7,6 @@
     <!-- Your form content goes here -->
 
     <! -- Required submit buttons -->
-    <%= submit_to_remote "create_grid_item", "Create", :url => {:action => "create_grid_item", :type => type}, :html => {:class => "create"} %> <br>
-    <%= submit_to_remote "update_grid_item", "Update", :url => {:action => "update_grid_item", :type => type}, :html => {:class => "update"} %>
+    <%= submit_to_remote "create_grid_item", "Create", :url => {:action => "create_grid_item", :type => type}, :html => {:class => "create"}, :condition => "" %> <br>
+    <%= submit_to_remote "update_grid_item", "Update", :url => {:action => "update_grid_item", :type => type}, :html => {:class => "update"}, :condition => ""%>
 <% end %>

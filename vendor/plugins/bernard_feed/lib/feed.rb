@@ -3,10 +3,15 @@ module Feed
     require 'rss/2.0'
 
     def get_feed(path)
-        content = ""
-        open(path) do |p|
-            content = p.read
+        begin
+            content = ""
+            path = path.gsub("http://","") 
+            open("http://" + path) do |p|
+                content = p.read
+            end
+            return RSS::Parser.parse(content, false)
+        rescue Exception => e
+            return "error"
         end
-        return RSS::Parser.parse(content, false)
     end
 end

@@ -31,4 +31,9 @@ class BoardPluginGenerator < Rails::Generator::NamedBase
 
         end
     end
+
+    protected 
+        def banner
+            "Usage: #{$0} board_plugin plugin_name"
+        end
 end

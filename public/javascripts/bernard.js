@@ -30,39 +30,40 @@ jQuery(document).ready(function() {
 		}
 	);
 	jQuery('#type').change(); //Need the onchange event on page load to load a form for the initial selected plugin type
-		jQuery("#deleteitem").click(function(e){
-			jQuery(lastTarget).remove();	
-			jQuery("#vmenu").toggle();
-			
-		});
 
-		jQuery("#edititem").click(function(e){
-			centerPopup('popup');
-			loadPopup('popup');
-			form = document.getElementById('select_form');
-			type = jQuery(lastTarget).data('data').type
-			for(var i=0; i < form.type.length; i++){
-				if(form.type[i].value == type.capitalize()){
-					form.type[i].selected = true;
-				}
-			}
-			type = document.getElementById(form.type.id)
-			jQuery(type).change();
-			alert("Loading item ->" + jQuery(lastTarget).data('data').title);
-			jQuery('.create').hide();
-			jQuery('.update').show();
-			jQuery('#form_for input[name=title]').val(jQuery(lastTarget).data('data').title);
-			jQuery('#form_for input[name=height]').val(jQuery(lastTarget).height());
-			jQuery('#form_for input[name=width]').val(jQuery(lastTarget).width());
-			jQuery('#form_for input[name=refresh_rate]').val(jQuery(lastTarget).data('data').refresh_rate);
-			var paramArray = jQuery(lastTarget).data('data').params.split(";");
+	jQuery("#deleteitem").click(function(e){
+		jQuery(lastTarget).remove();	
+		jQuery("#vmenu").toggle();
+		jQuery('#results-content').empty();
+	});
 
-			for(var i = 0; i < paramArray.length; i++) {
-				var ithParam = paramArray[i].split(":");
-				jQuery('#form_for input[name=' + ithParam[0] + ']').val(ithParam[1]);
+	jQuery("#edititem").click(function(e){
+		centerPopup('popup');
+		loadPopup('popup');
+		form = document.getElementById('select_form');
+		type = jQuery(lastTarget).data('data').type
+		for(var i=0; i < form.type.length; i++){
+			if(form.type[i].value == type.capitalize()){
+				form.type[i].selected = true;
 			}
-		
-		}); 
+		}
+		type = document.getElementById(form.type.id)
+		jQuery(type).change();
+		alert("Loading item ->" + jQuery(lastTarget).data('data').title);
+		jQuery('.create').hide();
+		jQuery('.update').show();
+		jQuery('#form_for input[name=title]').val(jQuery(lastTarget).data('data').title);
+		jQuery('#form_for input[name=height]').val(jQuery(lastTarget).height());
+		jQuery('#form_for input[name=width]').val(jQuery(lastTarget).width());
+		jQuery('#form_for input[name=refresh_rate]').val(jQuery(lastTarget).data('data').refresh_rate);
+		var paramArray = jQuery(lastTarget).data('data').params.split(";");
+
+		for(var i = 0; i < paramArray.length; i++) {
+			var ithParam = paramArray[i].split(":");
+			jQuery('#form_for input[name=' + ithParam[0] + ']').val(ithParam[1]);
+		}
+	
+	}); 
 
 	jQuery(document).click(function() {
 		jQuery("#vmenu").hide();
@@ -119,8 +120,7 @@ function enableEvents(e) {
 	item = document.getElementById(e)
 	display = document.getElementById('results-content')
 	
-	display.innerHTML = 'Object name : ' + e + '<br>'
-	+ 'x-axis : ' + jQuery(item).offset().left + '<br>'
+	display.innerHTML = 'x-axis : ' + jQuery(item).offset().left + '<br>'
 	+ 'y-axis : ' + jQuery(item).offset().top + '<br>'
 	+ 'Height : ' + (Element.getHeight(item)  - 4) + '<br>' 
 	+ 'Width : ' + (Element.getWidth(item) - 4) + '<br>'
@@ -218,4 +218,27 @@ function initItems(item, content, type, state) {
 function positionItem(item, x, y){
 	i = document.getElementById(item)
 	jQuery(i).offset({top : y, left : x })
+}
+
+//Validate general form fields. 
+//Annonymous function is behaving strangely. Return is not terminating function. Look at that.
+function validateForm(){
+	var returnValue = true;
+	jQuery(':input', '#form_for').each(function(){
+		if(this.value == ""){ 
+			alert("Please complete all fields.");
+			returnValue = false;
+			return false; 
+		}
+	});
+
+	if(isNaN(jQuery('#form_for input[name=width]').val())){
+		alert("Width must be a integer value.");
+		returnValue = false;
+	}
+	if(isNaN(jQuery('#form_for input[name=height]').val())){ 
+		alert("Height must be a integer value.");
+		returnValue = false; 
+	}
+	return returnValue;
 }

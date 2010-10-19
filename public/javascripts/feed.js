@@ -1,7 +1,7 @@
 /* 	Feed plugin javascript functions
 	Pieter Loubser
 	October 2010
-	Version 0.8
+	Version 0.03
 */
 
 var lastTarget = "";
