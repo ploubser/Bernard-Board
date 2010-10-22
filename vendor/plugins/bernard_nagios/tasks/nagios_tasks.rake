@@ -10,4 +10,17 @@ namespace :nagios do
             system "echo '\n\nSync failed!"
         end
     end
+
+    task :remove do
+        a = system "rm -rf app/views/griditems/plugins/nagios"
+        a = system "rm public/javascripts/nagios.js"
+        a = system "rm public/stylesheets/nagios.css"
+        if a == true
+             system "echo '\n\nnagios was removed'"  
+             system "echo '\nnagios source can be deleted from /vendor/plugins/bernard_nagios' " 
+        else
+            system "echo '\n\nnagios could not be removed'" 
+        end
+    end
+
 end

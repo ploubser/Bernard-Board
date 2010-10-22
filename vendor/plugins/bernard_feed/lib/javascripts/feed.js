@@ -53,3 +53,11 @@ function resizeText(container, currentFeed){
 		cheight = jQuery("#fontfit"+ currentFeed).height();
 	}
 }
+
+function validateFeed(){
+	if(jQuery('#form_for input[name=uri]').val() == ""){
+		alert("RSS url field cannot be empty");
+		return false;
+	}
+	return true;
+}

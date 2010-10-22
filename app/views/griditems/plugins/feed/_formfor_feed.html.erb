@@ -3,6 +3,7 @@
     Width : <%= text_field_tag "width", "", :size=>4%><br>
     Height: <%= text_field_tag "height", "", :size=>4%><br>
     RSS url: <%= text_field_tag "uri", "", :size=>24 %><br>
+    Refresh Rate: <%= text_field_tag "refresh_rate" %> <br>
     <%= hidden_field_tag "refresh_rate", "0" %>
     <%= submit_to_remote "create_grid_item", "Create", :url => {:action => "create_grid_item", :type => type}, :html => {:class => "create"}, :condition => "validateForm()" %> <br>
     <%= submit_to_remote "update_grid_item", "Update", :url => {:action => "update_grid_item", :type => type}, :html => {:class => "update"}, :condition => "validateForm()" %>

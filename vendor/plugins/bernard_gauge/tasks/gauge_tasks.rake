@@ -9,4 +9,17 @@ namespace :gauge do
             system "echo '\n\nSync failed!"
         end
     end
+
+    task :remove do
+        a = system "rm -rf app/views/griditems/plugins/gauge"
+        a = system "rm public/javascripts/gauge.js"
+        a = system "rm public/stylesheets/gauge.css"
+        if a == true
+            system "echo '\n\ngauge was removed'" 
+            system "echo '\ngauge source can be deleted from /vendor/plugins/bernard_gauge' "
+        else
+            system "echo '\n\ngauge could not be removed'"
+        end
+    end
+
 end

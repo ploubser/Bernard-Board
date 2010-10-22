@@ -1,3 +1,11 @@
+function validateTwitter(){
+	if(jQuery('#form_for input[name=uri]').val() == ""){ 
+		alert("Feed Uri field cannot be empty");
+		return false;
+	}
+	return true;
+}
+
 function update_twitterfeed(size){
 	 jQuery('#twitterfeed0').show();
 	 var feedSize = size;

@@ -1,6 +1,19 @@
 var gaugeArray = new Object;
 google.load('visualization', '1', {packages:['gauge']}); 
 
+function validateGauge(){
+	if(jQuery('#form_for input[name=remote]').attr("checked") == true && jQuery('#form_for input[name=url]').val() == ""){
+			alert("Url field cannot be empty");
+			return false;
+	}
+	else if(jQuery('#form_for input[name=path]').val() == ""){
+		alert("Path field cannot be empty");
+		return false;
+	}
+	return true;
+}
+
+
 function drawChart(_height, _width, value, div, title) {
 	gaugeArray[div] = new google.visualization.Gauge(document.getElementById(div));
 	gaugeArray[div]['data'] = new google.visualization.DataTable();

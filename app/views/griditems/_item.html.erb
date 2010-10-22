@@ -21,10 +21,22 @@
 <% if @state == "view" %>
     <% unless @type == "Gauge"%>
         <% unless @refresh_rate == 0 %>
-            <%= periodically_call_remote :url => {:action => :refresh, :id => "item#{@timestamp}", :type => @type, :parameters => @parameter_list, :title => @title}, :frequency => @refresh_rate%>
+            <%= periodically_call_remote :url => {
+                :action => :refresh, 
+                :id => "item#{@timestamp}", 
+                :type => @type, 
+                :parameters => @parameter_list, 
+                :title => @title}, :frequency => @refresh_rate%>
         <% end %>
     <% else%>
-            <%= periodically_call_remote :url => {:action => "redraw_gauge",  :id => "item#{@timestamp}", :type => @type, :parameters => @parameter_list, :title => @title}, :frequency => @refresh_rate %>
+        <% unless @refresh_rate == 0 %>
+            <%= periodically_call_remote :url => {
+                :action => "redraw_gauge",  
+                :id => "item#{@timestamp}", 
+                :type => @type, 
+                :parameters => @parameter_list, 
+                :title => @title}, :frequency => @refresh_rate %>
+        <% end %>
     <% end %>
     <%= javascript_tag "initItems('item#{@timestamp}', 'content#{@timestamp}', '#{@type}', 'view')" %>
 <% else %>

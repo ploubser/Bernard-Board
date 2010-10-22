@@ -1,7 +1,10 @@
 class GriditemsController < ApplicationController
   protect_from_forgery :only => [:index, :create_grid_item]
-  # GET /griditems
-  # GET /griditems.xml
+ 
+rescue_from ActionView::TemplateError do |exception|
+      rescue_action(exception.original_exception)
+end
+
   def index
     @fullscreen = params["fullscreen"]
     @load_board = params["load_board"]

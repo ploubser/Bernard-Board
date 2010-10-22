@@ -17,7 +17,7 @@ class BoardPluginGenerator < Rails::Generator::NamedBase
             m.directory "vendor/plugins/bernard_#{@plugin_name}/lib/javascripts"
             m.directory "vendor/plugins/bernard_#{@plugin_name}/lib/stylesheets"
             m.directory "vendor/plugins/bernard_#{@plugin_name}/lib/views"
-            m.file "lib/javascripts/javascripts.js", "vendor/plugins/bernard_#{@plugin_name}/lib/javascripts/#{@plugin_name}.js"
+            m.template "lib/javascripts/javascripts.js.erb", "vendor/plugins/bernard_#{@plugin_name}/lib/javascripts/#{@plugin_name}.js"
             m.file "lib/stylesheets/stylesheets.css", "vendor/plugins/bernard_#{@plugin_name}/lib/stylesheets/#{@plugin_name}.css"
             m.file "lib/views/_formfor_plugin.html.erb", "vendor/plugins/bernard_#{@plugin_name}/lib/views/_formfor_#{@plugin_name}.html.erb"
             m.file "lib/views/view.html.erb", "vendor/plugins/bernard_#{@plugin_name}/lib/views/_#{@plugin_name}.html.erb"

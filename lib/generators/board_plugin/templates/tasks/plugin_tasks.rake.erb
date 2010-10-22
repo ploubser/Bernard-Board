@@ -10,4 +10,17 @@ namespace :<%= plugin_name.to_sym%> do
             system "echo '\n\nSync failed!"
         end
     end
+    desc "Remove plugin files from Bernard-Board"
+    task :remove do
+        a = system "rm -rf app/views/griditems/plugins/<%= plugin_name %>"
+        a = system "rm public/javascripts/<%= plugin_name %>.js"
+        a = system "rm public/stylesheets/<%= plugin_name %>.css" 
+        if a == true 
+            system "echo '\n\n<%= plugin_name %> was removed'"
+            system "echo '\n<%= plugin_name %> source can be deleted from /vendor/plugins/bernard_<%=plugin_name%>' "
+        else
+            system "echo '\n\n<%= plugin_name %> could not be removed'"
+        end
+    end
+
 end

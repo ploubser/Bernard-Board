@@ -27,7 +27,7 @@
             <h1> Create new item for bernard to consume </h1>
             <% plugins = get_plugins %>
             <% form_tag({},{:id => "select_form"})do %>
-                <%= select_tag "type", options_for_select(plugins.sort), {:onchange => remote_function(:url => {:action => :render_form}, :with => "'type=' + this.value")}%>
+                <%= select_tag "type", options_for_select(plugins.sort), {:onchange => remote_function(:url => {:action => :render_form}, :with => "'type=' + this.value"), :id => "type"} %>
             <% end %>
             <div id="form_content" style="color:black"></div>
         </div>

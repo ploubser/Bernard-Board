@@ -2,22 +2,33 @@ module Nagios
     require 'nokogiri'
     
     def nagios(url, username, password, title)
-        uri = URI.parse("http://#{url.gsub("http://", "")}") 
-        http = Net::HTTP.new(uri.host, uri.port)
+        #Check is url is valid.
+        begin
+            uri = URI.parse("http://#{url.gsub("http://", "")}") 
+            http = Net::HTTP.new(uri.host, uri.port)
+        rescue Exception => e
+            return "error1"
+        end
         color = ""
-        #Get page from nagios
+
+        #Authenticate the user. 
         request = Net::HTTP::Get.new(uri.request_uri)
         request.basic_auth username, password
+        #Get page from nagios
         response = http.request(request)
+        if response.inspect =~/.*401.*/
+            return "error2"
+        end
+        
         #Parse html response body
         html= Nokogiri::HTML(response.body)
 
         #Critical - red
-        #Warning - Yellow                                                                                                                                                                           
+        #Warning - Yellow 
         #All good - Green
         html.css('tr').each do |e|
             if e.to_s =~/.*statusEven.*|.*statusOdd.*/
-                if e.inner_text =~/.*CRITICAL.*/                                                                                                                                                
+                if e.inner_text =~/.*CRITICAL.*/
                     color = "#FF0000" 
                 elsif e.inner_text =~/.*WARNING.*/ && color != "#FF0000"  
                     color = "#FFFF00" 

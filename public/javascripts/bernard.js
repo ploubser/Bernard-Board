@@ -220,25 +220,45 @@ function positionItem(item, x, y){
 	jQuery(i).offset({top : y, left : x })
 }
 
-//Validate general form fields. 
-//Annonymous function is behaving strangely. Return is not terminating function. Look at that.
+//Validate general form fields.
+//Try find a way around using an eval 
 function validateForm(){
-	var returnValue = true;
-	jQuery(':input', '#form_for').each(function(){
-		if(this.value == ""){ 
-			alert("Please complete all fields.");
-			returnValue = false;
-			return false; 
-		}
-	});
+	var returnVal = true;
+
+	if(jQuery('#form_for input[name=title]').val() == ""){
+		alert("Title field cannot be empty");
+		returnVal = false;
+	}
+	else if(jQuery('#form_for input[name=height]').val() == ""){
+		alert("Height field cannot be empty");
+		returnVal = false;
+	}
+	else if(jQuery('#form_for input[name=width]').val() == ""){
+		alert("Width field cannot be empty");
+		returnVal = false;
+	}
+	else if (jQuery('#form_for input[name=refresh_rate]').val() == ""){
+		alert("Refresh rate cannot be empty. (If you do not want the plugin to refresh, set rate to 0)");
+		returnVal = false;
+	}
 
 	if(isNaN(jQuery('#form_for input[name=width]').val())){
-		alert("Width must be a integer value.");
-		returnValue = false;
+		alert("Width must be an integer value.");
+		returnVal = false;
 	}
 	if(isNaN(jQuery('#form_for input[name=height]').val())){ 
-		alert("Height must be a integer value.");
-		returnValue = false; 
+		alert("Height must be an integer value.");
+		returnVal = false; 
 	}
-	return returnValue;
+	if(isNaN(jQuery('#form_for input[name=refresh_rate]').val())){
+		alert("Refresh Rate must be an integer value.");
+		returnVal = false;
+	}
+
+	if(returnVal != false){
+		returnVal = eval("validate" + jQuery('#type').val() + "();")
+	}
+
+	return returnVal;
+
 }

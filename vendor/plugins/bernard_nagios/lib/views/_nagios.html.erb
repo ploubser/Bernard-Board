@@ -1,2 +1,10 @@
-<%= nagios(@parameters["uri"], @parameters["username"], @parameters["password"], @title) %>
-
+<% result = nagios(@parameters["uri"], @parameters["username"], @parameters["password"], @title) %>
+<% if result == "error1" %>
+    <%= javascript_tag "alert('Could not create Nagios item. Please check if the url is correct.')"%>
+    <%= javascript_tag "jQuery('##{itemid}').remove();" %>
+<% elsif result == "error2" %>
+    <%= javascript_tag "alert('Could not create Nagios item. Please check if your username and password are correct.')"%>
+    <%= javascript_tag "jQuery('##{itemid}').remove();" %>
+<% else %>
+    <%= result %>
+<% end %>
