@@ -31,7 +31,8 @@
     <% else%>
         <% unless @refresh_rate == 0 %>
             <%= periodically_call_remote :url => {
-                :action => "redraw_gauge",  
+                :action => "redraw_gauge",
+                :controller => "gauge",
                 :id => "item#{@timestamp}", 
                 :type => @type, 
                 :parameters => @parameter_list, 

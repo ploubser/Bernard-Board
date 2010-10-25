@@ -3,6 +3,7 @@ namespace :gauge do
     task :sync do
         a = system "rsync -ruv vendor/plugins/bernard_gauge/lib/views/* app/views/griditems/plugins/gauge"
         a = system "rsync -ruv vendor/plugins/bernard_gauge/lib/javascripts/* public/javascripts"
+        a = system "rsync -ruv vendor/plugins/bernard_gauge/lib/gauge_controller.rb app/controllers"
         if a == true
             system "echo '\n\nSync was successful!'"
         else
