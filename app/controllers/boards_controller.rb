@@ -1,45 +1,38 @@
 class BoardsController < ApplicationController
-  # GET /boards
-  # GET /boards.xml
   def index
-    @boards = Board.all
+      @boards = Board.paginate :page => params[:page], :order => 'created_at DESC'
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.xml  { render :xml => @boards }
+      format.js {
+        render :update do |page|
+            page.replace_html 'container', :partial => 'board_results'
+            page << "bindPaginate()"
+        end
+      }
     end
   end
-
-  # GET /boards/1
-  # GET /boards/1.xml
+  
   def show
     @board = Board.find(params[:id])
 
     redirect_to :controller => "griditems", :action => :index, :fullscreen => true, :load_board => @board.name
-    #respond_to do |format|
-      #format.html # show.html.erb
-      #format.xml  { render :xml => @boards }
-    #end
   end
 
-  # GET /boards/new
-  # GET /boards/new.xml
   def new
     @boards = Board.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html 
       format.xml  { render :xml => @boards }
     end
   end
 
-  # GET /boards/1/edit
   def edit
     @boards = Board.find(params[:id])
   end
 
-  # POST /boards
-  # POST /boards.xml
   def create
     @boards = Board.new(params[:boards])
 
@@ -55,8 +48,6 @@ class BoardsController < ApplicationController
     end
   end
 
-  # PUT /boards/1
-  # PUT /boards/1.xml
   def update
     @boards = Board.find(params[:id])
 

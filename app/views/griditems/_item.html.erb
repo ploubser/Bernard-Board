@@ -6,7 +6,6 @@
 <%= @parameter_list = "" %>
 <div class="item" id="item<%= @timestamp%>" style="height:<%= @dimentions[0]%>px;width:<%=@dimentions[1] %>px;border:solid 2px;position:absolute;" onmousemove="if(!'<%=@state%>' == 'view'){enableEvents('item<%= @timestamp%>')};" >
     <%= render :partial => "griditems/plugins/#{@type.downcase}/#{@type.downcase}", :locals => {:parameters => @parameters, :itemid => "item" + @timestamp}%>
-    <%= javascript_tag "positionItem('item#{@timestamp}', 100 , 100)" %>
     <%= form_tag 'index' %>
     <% @parameters.each do |p| %>
         <% unless p.to_s =~/.*authenticity.*|.*action.*|.*controller.*|.*height.*|.*refresh_rate.*|.*width.*|.*create.*|.*type.*|.*title.*|.*update.*/ %>

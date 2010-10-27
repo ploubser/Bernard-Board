@@ -1,4 +1,4 @@
-<% list = Board.find(:all) %>
+<% list  = Board.paginate :page => params[:page], :order => 'created_at DESC' %>
 <table>
     <th> Name </th>
     <th> Created on </th>
@@ -13,3 +13,4 @@
         </tr>
     <% end %>
 </table>
+<%= will_paginate list %>

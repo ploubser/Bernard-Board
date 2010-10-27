@@ -13,9 +13,14 @@ end
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @griditems }
+      format.js {
+        render :update do |page|
+            page.replace_html 'content', :partial => 'boards'
+            page << "bindPaginate()"
+        end
+      }
     end
   end
-
 
   def create_grid_item
     @dimentions = [params[:height], params[:width]]
@@ -27,6 +32,7 @@ end
     render :update do |page|
         page << "disablePopup();"
         page.insert_html :bottom, :container, :partial => "item" 
+        page << ""
     end
   end
  

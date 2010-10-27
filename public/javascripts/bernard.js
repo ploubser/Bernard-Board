@@ -1,8 +1,17 @@
 var popup = 0; //show popup = false
 var lastTarget = ""; //last clicked item
 
+//Allows for ajax pagination with the will_paginate plugin
+function bindPaginate(){
+	jQuery('.pagination a').click(function(e) {
+		new Ajax.Request(jQuery(this).attr('href'), {method: 'get'});
+		e.preventDefault();
+	});
+}
 
 jQuery(document).ready(function() {
+
+	bindPaginate();
 	jQuery('.options').draggable({'revert' : false, 'zindex' : 350})
 	jQuery('.minimise').dblclick(function() {
 		jQuery('.optionscontents').toggle();

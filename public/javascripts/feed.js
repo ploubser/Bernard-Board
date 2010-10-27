@@ -1,7 +1,6 @@
 //Update feed item periodically.
 // - currently hardcoded at 10s.
 function update_feed(size, id){
-	alert(id);
 	jQuery('#feed0' + id).show();
 	var feedSize = size;
 	var currentFeed = 0;
