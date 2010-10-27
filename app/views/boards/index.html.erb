@@ -13,27 +13,6 @@
 
 <div id="screen" class="ui-widget ui-widget-content">
     <div id="container">
-        <div class="ui-widget-header"><center>BernardBoard</center></div>
-        <center><div id="boards_table">
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Width</th>
-                    <th>Height</th>
-                </tr>
-
-                <% @boards.each do |board| %>
-                    <tr>
-                        <td><%=h board.name %></td>
-                        <td><%=h board.width %></td>
-                        <td><%=h board.height %></td>
-                        <td><%= link_to 'Show', board %></td>
-                        <td> <%= link_to_remote "Delete Board", :url => {:action => "delete_board"}, :html => {:class => "board_item"}, :with => "'name=' + '#{board.name}'" %> </td>
-                    </tr>
-                <% end %>
-        </table></center>
-            <div style="position:absolute;bottom:10%;right:10%;"><%= link_to 'Edit and Create boards', :action => :index, :controller => :griditems %><div>
-        </div>
-
+        <%= render :partial => "board_results" %>
     </div>
 </div>

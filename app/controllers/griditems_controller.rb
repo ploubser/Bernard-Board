@@ -1,7 +1,10 @@
 class GriditemsController < ApplicationController
   protect_from_forgery :only => [:index, :create_grid_item]
-  # GET /griditems
-  # GET /griditems.xml
+ 
+rescue_from ActionView::TemplateError do |exception|
+      rescue_action(exception.original_exception)
+end
+
   def index
     @fullscreen = params["fullscreen"]
     @load_board = params["load_board"]
@@ -10,9 +13,14 @@ class GriditemsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @griditems }
+      format.js {
+        render :update do |page|
+            page.replace_html 'content', :partial => 'boards'
+            page << "bindPaginate()"
+        end
+      }
     end
   end
-
 
   def create_grid_item
     @dimentions = [params[:height], params[:width]]
@@ -24,6 +32,7 @@ class GriditemsController < ApplicationController
     render :update do |page|
         page << "disablePopup();"
         page.insert_html :bottom, :container, :partial => "item" 
+        page << ""
     end
   end
  
@@ -130,7 +139,6 @@ class GriditemsController < ApplicationController
               tmp = p.split(/:/, 2)
               @parameters[tmp[0]] = tmp[1]
             end
-            RAILS_DEFAULT_LOGGER.debug @parameters.inspect
             @position = [item.x_axis, item.y_axis]
             @state = params[:state]
             page.insert_html :bottom, :container, :partial => "item"
@@ -148,33 +156,6 @@ class GriditemsController < ApplicationController
         page.replace_html  :content, :partial => "boards"
       end
 
-  end
-
-  def redraw_gauge
-      div = ""
-      value = ""
-      if params[:id] =~ /item(\d+)/
-          div = "con#{$1}"
-      end
-      @parameters = {}
-      params[:parameters].split(";").each do |p|
-        tmp = p.split(/:/, 2)
-        @parameters[tmp[0]] = tmp[1]
-      end
-        
-      unless @parameters["remote"] == "true"
-        tmp = File.open(@parameters["path"], 'r')
-        value = tmp.gets()
-      else
-          Net::HTTP.start(@parameters["url"]) do |http|
-              resp = http.get("/#{@parameters["path"]}")
-              value = resp.body
-          end
-      end
-
-      render :update do |page|
-          page << "redrawGauge(#{value}, '#{div}')"
-      end
   end
 
   def edit

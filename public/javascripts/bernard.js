@@ -1,12 +1,17 @@
 var popup = 0; //show popup = false
-var gaugeArray = new Object;
 var lastTarget = ""; //last clicked item
 
-//Gauge plugin
-google.load('visualization', '1', {packages:['gauge']});
-google.load("feeds", "1");
+//Allows for ajax pagination with the will_paginate plugin
+function bindPaginate(){
+	jQuery('.pagination a').click(function(e) {
+		new Ajax.Request(jQuery(this).attr('href'), {method: 'get'});
+		e.preventDefault();
+	});
+}
 
 jQuery(document).ready(function() {
+
+	bindPaginate();
 	jQuery('.options').draggable({'revert' : false, 'zindex' : 350})
 	jQuery('.minimise').dblclick(function() {
 		jQuery('.optionscontents').toggle();
@@ -34,39 +39,40 @@ jQuery(document).ready(function() {
 		}
 	);
 	jQuery('#type').change(); //Need the onchange event on page load to load a form for the initial selected plugin type
-		jQuery("#deleteitem").click(function(e){
-			jQuery(lastTarget).remove();	
-			jQuery("#vmenu").toggle();
-			
-		});
 
-		jQuery("#edititem").click(function(e){
-			centerPopup('popup');
-			loadPopup('popup');
-			form = document.getElementById('select_form');
-			type = jQuery(lastTarget).data('data').type
-			for(var i=0; i < form.type.length; i++){
-				if(form.type[i].value == type.capitalize()){
-					form.type[i].selected = true;
-				}
-			}
-			type = document.getElementById(form.type.id)
-			jQuery(type).change();
-			alert("Loading item ->" + jQuery(lastTarget).data('data').title);
-			jQuery('.create').hide();
-			jQuery('.update').show();
-			jQuery('#form_for input[name=title]').val(jQuery(lastTarget).data('data').title);
-			jQuery('#form_for input[name=height]').val(jQuery(lastTarget).height());
-			jQuery('#form_for input[name=width]').val(jQuery(lastTarget).width());
-			jQuery('#form_for input[name=refresh_rate]').val(jQuery(lastTarget).data('data').refresh_rate);
-			var paramArray = jQuery(lastTarget).data('data').params.split(";");
+	jQuery("#deleteitem").click(function(e){
+		jQuery(lastTarget).remove();	
+		jQuery("#vmenu").toggle();
+		jQuery('#results-content').empty();
+	});
 
-			for(var i = 0; i < paramArray.length; i++) {
-				var ithParam = paramArray[i].split(":");
-				jQuery('#form_for input[name=' + ithParam[0] + ']').val(ithParam[1]);
+	jQuery("#edititem").click(function(e){
+		centerPopup('popup');
+		loadPopup('popup');
+		form = document.getElementById('select_form');
+		type = jQuery(lastTarget).data('data').type
+		for(var i=0; i < form.type.length; i++){
+			if(form.type[i].value == type.capitalize()){
+				form.type[i].selected = true;
 			}
-		
-		}); 
+		}
+		type = document.getElementById(form.type.id)
+		jQuery(type).change();
+		alert("Loading item ->" + jQuery(lastTarget).data('data').title);
+		jQuery('.create').hide();
+		jQuery('.update').show();
+		jQuery('#form_for input[name=title]').val(jQuery(lastTarget).data('data').title);
+		jQuery('#form_for input[name=height]').val(jQuery(lastTarget).height());
+		jQuery('#form_for input[name=width]').val(jQuery(lastTarget).width());
+		jQuery('#form_for input[name=refresh_rate]').val(jQuery(lastTarget).data('data').refresh_rate);
+		var paramArray = jQuery(lastTarget).data('data').params.split(";");
+
+		for(var i = 0; i < paramArray.length; i++) {
+			var ithParam = paramArray[i].split(":");
+			jQuery('#form_for input[name=' + ithParam[0] + ']').val(ithParam[1]);
+		}
+	
+	}); 
 
 	jQuery(document).click(function() {
 		jQuery("#vmenu").hide();
@@ -123,8 +129,7 @@ function enableEvents(e) {
 	item = document.getElementById(e)
 	display = document.getElementById('results-content')
 	
-	display.innerHTML = 'Object name : ' + e + '<br>'
-	+ 'x-axis : ' + jQuery(item).offset().left + '<br>'
+	display.innerHTML = 'x-axis : ' + jQuery(item).offset().left + '<br>'
 	+ 'y-axis : ' + jQuery(item).offset().top + '<br>'
 	+ 'Height : ' + (Element.getHeight(item)  - 4) + '<br>' 
 	+ 'Width : ' + (Element.getWidth(item) - 4) + '<br>'
@@ -194,27 +199,9 @@ function initItems(item, content, type, state) {
 
 		jQuery(e).resizable({ handles: 'nw, ne, sw,se' , 
 				      containment: jQuery('.container'), 
-				      stop: function(e){
-				      	var max = 18;
-					jQuery(this).wrapInner('<div id="fontfit"></div>');
-					var dheight = jQuery(this).height();
-					var cheight = jQuery("#fontfit").height();
-					var fsize = ((jQuery(this).css("font-size")).slice(0,-2))*1;
-					while(cheight<dheight && fsize<max) {
-						fsize+=1;
-						jQuery(this).css("font-size",fsize+"px");
-						cheight = jQuery("#fontfit").height();
-					}
-					while(cheight>dheight || fsize>max) {
-						fsize-=1;
-						jQuery(this).css("font-size",fsize+"px");
-						cheight = jQuery("#fontfit").height();
-					}
-					//jQuery("#fontfit").replaceWith(jQuery("#fontfit").html());
-					//return this;
 				   }					
 				     
-		});
+		);
 
 		jQuery(".item").bind("contextmenu", function(e) {
 			jQuery("#vmenu").css({
@@ -236,61 +223,51 @@ function initItems(item, content, type, state) {
 	}
 }
 
-//These methods are the same, implemented twice to conceptually distinguish between twitter feeds and normal feeds. Trying to implement better twitter plugin.
-function loadFeedControl(div, feed) {
-	var options = {
-	    numResults : 8
-	      }
-	var fg = new GFdynamicFeedControl("http://" + feed.replace("http://", ""), div, options);
-}
-
-function loadTwitterFeedControl(div, feed) {
-	var twitterfeed = feed;
-	var options = {numResults : 8
-	}
-	var fg = new GFdynamicFeedControl("http://" + twitterfeed.replace("http://", ""), div, options)
-}
-
-//Gauge plugin JS. Port to another file
-function drawChart(_height, _width, value, div, title) {
-	gaugeArray[div] = new google.visualization.Gauge(document.getElementById(div));
-	gaugeArray[div]['data'] = new google.visualization.DataTable();
-	gaugeArray[div]['data'].addColumn('number', title);
-	gaugeArray[div]['data'].addRows(1);
-	gaugeArray[div]['data'].setCell(0,0,100); 
-
-	gaugeOptions = {
-	min: 0,
-	max: 100,
-	yellowFrom: 70,
-	yellowTo: 90,
-	redFrom: 90,
-	redTo: 100
-	};
-	gaugeArray[div].draw(gaugeArray[div]['data'], gaugeOptions);
-}
-
-//Gauge plugin, look at evals
-function redrawGauge(value, div){
-	gaugeArray[div]['data'].setValue(0,0,value);
-	gaugeArray[div].draw(gaugeArray[div]['data'], gaugeOptions);
-}
-
 //Need this to reposition items after a state has been reloaded
 function positionItem(item, x, y){
 	i = document.getElementById(item)
 	jQuery(i).offset({top : y, left : x })
 }
 
-function shrink(){
-var feed_description_span = document.getElementById("feed-discription-span");
-        var feed_description = document.getElementById("feed-discription");
+//Validate general form fields.
+//Try find a way around using an eval 
+function validateForm(){
+	var returnVal = true;
 
-        feed_discription_span.style.fontSize = 64;
+	if(jQuery('#form_for input[name=title]').val() == ""){
+		alert("Title field cannot be empty");
+		returnVal = false;
+	}
+	else if(jQuery('#form_for input[name=height]').val() == ""){
+		alert("Height field cannot be empty");
+		returnVal = false;
+	}
+	else if(jQuery('#form_for input[name=width]').val() == ""){
+		alert("Width field cannot be empty");
+		returnVal = false;
+	}
+	else if (jQuery('#form_for input[name=refresh_rate]').val() == ""){
+		alert("Refresh rate cannot be empty. (If you do not want the plugin to refresh, set rate to 0)");
+		returnVal = false;
+	}
 
-        while(feed_discription_span.offsetHeight > feed_discription.offsetHeight)
-        {
-                feed_discription_span.style.fontSize = parseInt(feed_discription_span.style.fontSize) - 1;
-        }
-   }
+	if(isNaN(jQuery('#form_for input[name=width]').val())){
+		alert("Width must be an integer value.");
+		returnVal = false;
+	}
+	if(isNaN(jQuery('#form_for input[name=height]').val())){ 
+		alert("Height must be an integer value.");
+		returnVal = false; 
+	}
+	if(isNaN(jQuery('#form_for input[name=refresh_rate]').val())){
+		alert("Refresh Rate must be an integer value.");
+		returnVal = false;
+	}
 
+	if(returnVal != false){
+		returnVal = eval("validate" + jQuery('#type').val() + "();")
+	}
+
+	return returnVal;
+
+}

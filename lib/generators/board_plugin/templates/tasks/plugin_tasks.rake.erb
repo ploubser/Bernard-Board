@@ -1,0 +1,26 @@
+namespace :<%= plugin_name.to_sym%> do
+    desc "Sync plugin files with Bernard-Board"
+    task :sync do
+        a = system "rsync -ruv vendor/plugins/bernard_<%= plugin_name %>/lib/views/* app/views/griditems/plugins/<%= plugin_name %>"
+        a = system "rsync -ruv vendor/plugins/bernard_<%= plugin_name%>/lib/javascripts/* public/javascripts"
+        a = system "rsync -ruv vendor/plugins/bernard_<%= plugin_name%>/lib/stylesheets/* public/stylesheets"
+        if a == true
+            system "echo '\n\nSync was successful!'"
+        else
+            system "echo '\n\nSync failed!"
+        end
+    end
+    desc "Remove plugin files from Bernard-Board"
+    task :remove do
+        a = system "rm -rf app/views/griditems/plugins/<%= plugin_name %>"
+        a = system "rm public/javascripts/<%= plugin_name %>.js"
+        a = system "rm public/stylesheets/<%= plugin_name %>.css" 
+        if a == true 
+            system "echo '\n\n<%= plugin_name %> was removed'"
+            system "echo '\n<%= plugin_name %> source can be deleted from /vendor/plugins/bernard_<%=plugin_name%>' "
+        else
+            system "echo '\n\n<%= plugin_name %> could not be removed'"
+        end
+    end
+
+end

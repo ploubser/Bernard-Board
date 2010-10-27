@@ -1,0 +1,12 @@
+<div class="ui-widget-header">
+    <%= @title %>
+</div>
+<% calendar_events = calendar(@parameters["usrname"], @parameters["passwrd"]) %>
+<% if calendar_events =="error" %>
+    <%= javascript_tag "alert('Could not create Calendar item. Incorrect username or password.')"%>
+    <%= javascript_tag "jQuery('##{itemid}').remove();" %> 
+<% else %>
+    <% calendar_events.each_with_index do |event, i| %>
+        <%=  event.title %> - <%= event.start_time.strftime("%a %d-%m-%Y %H:%M")%><br>
+    <% end %>
+<%end %>
