@@ -1,3 +1,5 @@
+<% id = Time.now.to_i %>
+<% size = 0 %>
 <div class="ui-widget-header">
     <%= @title %>
 </div>
@@ -6,7 +8,27 @@
     <%= javascript_tag "alert('Could not create Calendar item. Incorrect username or password.')"%>
     <%= javascript_tag "jQuery('##{itemid}').remove();" %> 
 <% else %>
-    <% calendar_events.each_with_index do |event, i| %>
-        <%=  event.title %> - <%= event.start_time.strftime("%a %d-%m-%Y %H:%M")%><br>
-    <% end %>
+    <div class="calendar">
+        <table cellspacing="5" >
+        <% calendar_events.each_with_index do |event, i| %>
+            <tr id="calevent<%=i%><%=id%>" class="calevent<%=id%>" style="display:none;">
+                <% unless event.start_time < Time.now() %>
+                    <% size = size + 1 %>
+                    <% background_color = ""%>
+                    <% if (event.start_time - Time.now ) < 86400 %>
+                        <% min = (event.start_time - Time.now) / 60 % 60%>
+                        <% sec = (event.start_time - Time.now) % 60 %>
+                        <% hour = (event.start_time - Time.now) / 60 /60 %>
+                        <td bgcolor="#FF0000"><%= event.title %></td> <td>In <%=hour.to_i%> hours <%= min.to_i%> minutes</td>
+                    <% else %>
+                        <td bgcolor="#33CC00"><%= event.title %></td> <td><%= event.start_time.strftime("%a %d-%m %H:%M")%></td>
+                    <% end %>
+
+                <% end %>
+        </tr>
+        <% end %>
+        </table>
+    </div>
+    <%= javascript_tag "update_calendar(#{size}, #{id}, #{@parameters["calevents"]})" %>
 <%end %>
+

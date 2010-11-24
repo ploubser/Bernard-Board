@@ -5,6 +5,7 @@
 <% javascripts.each do |javascript| %>
     <%= javascript_include_tag "#{javascript}" %>
 <% end %>
+<%= javascript_include_tag "js/highcharts.js" %>
 
 <% stylesheets = get_stylesheets %>
 <% stylesheets.each do |stylesheet| %>
@@ -17,11 +18,8 @@
 
     <div class="ui-widget-header"><center>BernardBoard</center></div>
     
-    
     <div class="container ui-widget-content"  id="container">
         
-        <div id="progressbar"></div>
-
         <div id="popup" class="popup" >
             <a id="popupClose" class="popupClose">x</a>
             <h1> Create new item for bernard to consume </h1>

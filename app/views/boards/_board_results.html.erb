@@ -12,15 +12,22 @@
                     <td><%=h board.name %></td>
                     <td><%=h board.width %></td> 
                     <td><%=h board.height %></td>
-                    <td><%= link_to 'Show', board %></td>
-                    <td> <%= link_to_remote "Delete Board", 
-                                             :url => {:action => "delete_board"}, 
-                                             :html => {:class => "board_item"}, 
-                                             :with => "'name=' + '#{board.name}'" %> </td>
+                    <td><%= button_to 'Show', {:action => "show", :controller => "boards", :id => board.id, :method => "get"},
+                                              {:class => "ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only",
+                                                  :method => "get"} %></td>
+                    <td> <%= button_to_remote "Delete Board", 
+                                            {:url => {:action => "delete_board", :id =>board.id}, :with => "'name=' + '#{board.name}'"},
+                                            :class => "ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                                                 %> </td>
                 </tr>
             <% end %>
         </table>
         <div id="board_paginate"><%= will_paginate @boards %></div>
 </div></center>
-<div style="position:absolute;bottom:10%;right:10%;"><%= link_to 'Edit and Create boards', :action => :index, :controller => :griditems %>
+<div style="position:absolute;bottom:10%;right:10%;">
+    <%= button_to 'Edit and Create boards', 
+            {:action => :index, :controller => :griditems},
+            {:class => "ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only",
+             :method => "get"}
+    %></div>
 

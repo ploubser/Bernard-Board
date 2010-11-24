@@ -1,3 +1,7 @@
+hr {
+	border-color:#00FF00;
+}
+
 .ui-widget-header{
 	text-align:center;
 }
@@ -58,6 +62,7 @@
 .item{
 	font-style:bold;
 	overflow:hidden;
+	border-color:#00FF00;
 }
 
 .popup{  
@@ -108,9 +113,10 @@
 }
 
 .feed{
-	background-color:#111111;
+	background-color:black;
 	font-style:helvetica impact serif;
 	font-weight:bold;
+	color:green;
 }
 
 #vmenu{

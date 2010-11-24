@@ -5,6 +5,15 @@ rescue_from ActionView::TemplateError do |exception|
       rescue_action(exception.original_exception)
 end
 
+#######TEMP TEST ACTION! GET RID OF IT BEFORE YOU COMMIT!!!!########
+  def get_json
+    @values = ActiveSupport::JSON.encode [Time.now.to_i * 1000 ,rand(10)]
+
+    respond_to do |format|
+        format.json {render :json => @values}
+    end
+  end
+
   def index
     @fullscreen = params["fullscreen"]
     @load_board = params["load_board"]

@@ -1,6 +1,7 @@
 class BoardsController < ApplicationController
+
   def index
-      @boards = Board.paginate :page => params[:page], :order => 'created_at DESC'
+    @boards = Board.paginate :page => params[:page], :order => 'created_at DESC'
 
     respond_to do |format|
       format.html
@@ -16,7 +17,6 @@ class BoardsController < ApplicationController
   
   def show
     @board = Board.find(params[:id])
-
     redirect_to :controller => "griditems", :action => :index, :fullscreen => true, :load_board => @board.name
   end
 
@@ -64,6 +64,7 @@ class BoardsController < ApplicationController
   end
 
   def delete_board
+
       Board.delete_all("name = '#{params[:name]}'") 
       BoardItem.delete_all("board = '#{params[:name]}'")
       render :update do |page|

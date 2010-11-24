@@ -4,7 +4,7 @@
 
 
 <%= @parameter_list = "" %>
-<div class="item" id="item<%= @timestamp%>" style="height:<%= @dimentions[0]%>px;width:<%=@dimentions[1] %>px;border:solid 2px;position:absolute;" onmousemove="if(!'<%=@state%>' == 'view'){enableEvents('item<%= @timestamp%>')};" >
+<div class="item" id="item<%= @timestamp%>" style="height:<%= @dimentions[0]%>px;width:<%=@dimentions[1] %>px;border:solid 2px;position:absolute;border-color:#00FF00;" onmousemove="if(!'<%=@state%>' == 'view'){enableEvents('item<%= @timestamp%>')};" >
     <%= render :partial => "griditems/plugins/#{@type.downcase}/#{@type.downcase}", :locals => {:parameters => @parameters, :itemid => "item" + @timestamp}%>
     <%= form_tag 'index' %>
     <% @parameters.each do |p| %>

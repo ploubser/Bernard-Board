@@ -10,7 +10,7 @@
         </div>
 
         <% feed.items.each_with_index do |topic,i| %>
-            <div id="feed<%=i%><%= id%>" class="feed<%=id %>" style="display:none;">
+            <div id="feed<%=i%><%= id%>" class="feed<%=id %>" style="display:none;color:#00ff00;font-family:'Courier New', 'Courier', 'monospace';">
                 <div id="feed-header<%=i%>" 
                     <%= image_tag "rss_icon.gif", :html => {"align" => "left"}%>
                     <%= topic.title %><br>

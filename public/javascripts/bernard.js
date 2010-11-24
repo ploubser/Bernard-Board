@@ -11,6 +11,8 @@ function bindPaginate(){
 
 jQuery(document).ready(function() {
 
+	jQuery('.button_to').button();
+
 	bindPaginate();
 	jQuery('.options').draggable({'revert' : false, 'zindex' : 350})
 	jQuery('.minimise').dblclick(function() {
