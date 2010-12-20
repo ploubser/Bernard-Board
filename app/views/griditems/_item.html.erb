@@ -18,7 +18,6 @@
 <%= javascript_tag "saveDetails('item#{@timestamp}', '#{@parameter_list}', '#{@type}', '#{@refresh_rate}', '#{@title}', '#{@dimentions[0]}', '#{@dimentions[1]}');" %>
 
 <% if @state == "view" %>
-    <% unless @type == "Gauge"%>
         <% unless @refresh_rate == 0 %>
             <%= periodically_call_remote :url => {
                 :action => :refresh, 
@@ -27,17 +26,6 @@
                 :parameters => @parameter_list, 
                 :title => @title}, :frequency => @refresh_rate%>
         <% end %>
-    <% else%>
-        <% unless @refresh_rate == 0 %>
-            <%= periodically_call_remote :url => {
-                :action => "redraw_gauge",
-                :controller => "gauge",
-                :id => "item#{@timestamp}", 
-                :type => @type, 
-                :parameters => @parameter_list, 
-                :title => @title}, :frequency => @refresh_rate %>
-        <% end %>
-    <% end %>
     <%= javascript_tag "initItems('item#{@timestamp}', 'content#{@timestamp}', '#{@type}', 'view')" %>
 <% else %>
     <%= javascript_tag "initItems('item#{@timestamp}', 'content#{@timestamp}', '#{@type}', 'config')" %>

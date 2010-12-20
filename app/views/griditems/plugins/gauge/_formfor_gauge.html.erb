@@ -3,10 +3,9 @@
     Width : <%= text_field_tag "width", "", :size=>4%><br>
     Height: <%= text_field_tag "height", "", :size=>4%><br>
     Remote: <%= check_box_tag "remote", true %><br>
-    <div id="gauge_remote_url" style="display:none;"> Url: <%= text_field_tag "url"%></div>
-    <%= observe_field :remote, :function => "jQuery('#gauge_remote_url').toggle()" %>
     Path: <%= text_field_tag "path", "", :size=>24 %><br>
-    Refresh: <%= text_field_tag "refresh_rate"%><br>
+    Update Frequency (in seconds): <%= text_field_tag "rate", "", :size => 4 %> <br>
+    <%= hidden_field_tag "refresh_rate", 0%><br>
     <%= submit_to_remote "create_grid_item", "Create", :url => {:action => "create_grid_item", :type => type}, :html => {:class => "create"}, :condition => "validateForm()" %> <br>
     <%= submit_to_remote "update_grid_item", "Update", :url => {:action => "update_grid_item", :type => type}, :html => {:class => "update"}, :condition => "validateForm()"%>
 <% end %>

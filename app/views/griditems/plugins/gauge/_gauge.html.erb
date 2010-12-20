@@ -3,6 +3,5 @@
 </div>
 
 <div id="con<%= @timestamp%>" style="height:100%;width:100%">
-    <%= javascript_tag "drawChart(#{@dimentions[1]}, #{@dimentions[1]}, #{rand(100)}, 'con#{@timestamp}', '#{@title}')" %>
+    <%= javascript_tag "drawChart(#{@dimentions[1]}, #{@dimentions[1]}, 'con#{@timestamp}', '#{@title}', '#{parameters["remote"]}', '#{parameters["path"]}', '#{parameters["rate"]}')" %>
 </div>
-

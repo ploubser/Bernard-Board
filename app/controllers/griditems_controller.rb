@@ -1,13 +1,12 @@
 class GriditemsController < ApplicationController
   protect_from_forgery :only => [:index, :create_grid_item]
  
-rescue_from ActionView::TemplateError do |exception|
-      rescue_action(exception.original_exception)
-end
-
 #######TEMP TEST ACTION! GET RID OF IT BEFORE YOU COMMIT!!!!########
   def get_json
-    @values = ActiveSupport::JSON.encode [Time.now.to_i * 1000 ,rand(10)]
+    a = [Time.now.to_i * 1000 ,rand(40) + 40]
+    @values = ActiveSupport::JSON.encode a
+    RAILS_DEFAULT_LOGGER.debug a
+    RAILS_DEFAULT_LOGGER.debug @values
 
     respond_to do |format|
         format.json {render :json => @values}

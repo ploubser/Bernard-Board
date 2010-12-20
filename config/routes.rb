@@ -48,4 +48,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id.:format'
   map.connect 'save_state', :controller => "griditems", :action => "save_state"
   map.connect 'get_json', :controller => "griditems", :action => "get_json"
+  map.connect 'get_mcjson', :controller => "marionettecollective", :action => "get_mcjson"
+  map.connect 'get_gaugejson', :controller => "gauge", :action =>"get_gaugejson"
 end

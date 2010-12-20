@@ -1,4 +1,5 @@
 var gaugeArray = new Object;
+var refresh_rate = 0;
 google.load('visualization', '1', {packages:['gauge']}); 
 
 function validateGauge(){
@@ -14,7 +15,8 @@ function validateGauge(){
 }
 
 
-function drawChart(_height, _width, value, div, title) {
+function drawChart(_height, _width, div, title, remote, path, rate) {
+	refresh_rate = rate * 1000
 	gaugeArray[div] = new google.visualization.Gauge(document.getElementById(div));
 	gaugeArray[div]['data'] = new google.visualization.DataTable();
 	gaugeArray[div]['data'].addColumn('number', title);
@@ -30,10 +32,31 @@ function drawChart(_height, _width, value, div, title) {
 		redTo: 100
 	};
 	gaugeArray[div].draw(gaugeArray[div]['data'], gaugeOptions);
+	redrawGauge(0, div, remote, path)
+	
 };
 
 //Custom redraw function
-function redrawGauge(value, div){
-	gaugeArray[div]['data'].setValue(0,0,value);
-	gaugeArray[div].draw(gaugeArray[div]['data'], gaugeOptions);
+function redrawGauge(point, div, remote, path){
+	if(remote == ""){
+		var url = path
+		var data = "";
+	}
+	else
+	{
+		var url = "get_gaugejson"
+		var data = "url=" +path
+	}
+	jQuery.ajax({
+		url: url,
+		data: data,
+		dataType: 'json',
+		success: function(point) {
+			gaugeArray[div]['data'].setValue(0,0,point);
+			gaugeArray[div].draw(gaugeArray[div]['data'], gaugeOptions);
+			timeout = setTimeout(function(){
+				redrawGauge(point, div, remote, path)
+			}, refresh_rate);
+		}, cache: false
+	});
 }
