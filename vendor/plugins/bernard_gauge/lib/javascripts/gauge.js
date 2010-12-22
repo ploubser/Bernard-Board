@@ -55,7 +55,12 @@ function redrawGauge(point, div, remote, path){
 			gaugeArray[div]['data'].setValue(0,0,point);
 			gaugeArray[div].draw(gaugeArray[div]['data'], gaugeOptions);
 			timeout = setTimeout(function(){
-				redrawGauge(point, div, remote, path)
+				if(jQuery(document.getElementById(div)).attr("id") == null){
+					 clearTimeout(timeout);
+				}
+				else{
+					redrawGauge(point, div, remote, path)
+				}
 			}, refresh_rate);
 		}, cache: false
 	});

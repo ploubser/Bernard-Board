@@ -50,4 +50,5 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'get_json', :controller => "griditems", :action => "get_json"
   map.connect 'get_mcjson', :controller => "marionettecollective", :action => "get_mcjson"
   map.connect 'get_gaugejson', :controller => "gauge", :action =>"get_gaugejson"
+  map.connect 'get_puppet_status', :controller => "marionettecollective", :action => "get_puppet_status"
 end
