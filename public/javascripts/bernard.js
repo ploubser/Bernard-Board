@@ -1,7 +1,7 @@
 var popup = 0; //show popup = false
 var lastTarget = ""; //last clicked item
 
-//Allows for ajax pagination with the will_paginate plugin
+//Allows for ajax pagination with the Rails will_paginate plugin
 function bindPaginate(){
 	jQuery('.pagination a').click(function(e) {
 		new Ajax.Request(jQuery(this).attr('href'), {method: 'get'});
@@ -232,7 +232,6 @@ function positionItem(item, x, y){
 }
 
 //Validate general form fields.
-//Try find a way around using an eval 
 function validateForm(){
 	var returnVal = true;
 
@@ -267,7 +266,7 @@ function validateForm(){
 	}
 
 	if(returnVal != false){
-		returnVal = eval("validate" + jQuery('#type').val() + "();")
+		returnVal = (new Function("validate" + jQuery('#type').val() + "();"))();
 	}
 
 	return returnVal;

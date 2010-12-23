@@ -1,10 +1,11 @@
-Bernard Board - Revision 0.08a
+Bernard Board - Revision 0.08b
 
 Opensource plugable status board. 
 
 Bernard Board is a free web based status board application framework written in Ruby on Rails. The goal is to create a framework that can be used to created a visual
 representation of data by implementing simple plugins and the framework will take care of rendering, refreshing and saving a board for future use.
 
+CHANGELOG 0.08b Minor performace and security update to validation method.
 CHANGELOG 0.08a Fixed minor bug in the gauge plugin
 CHANGELOG 0.08 Major bug fix revision. Cleaned up refresh mechanism, which is now limited to static div refreshes and ajax calls for dynamic updating.
 CHANGELOG 0.06 Fixed a range of bugs and updated generator to create a javascript skeleton for basic form validation.
