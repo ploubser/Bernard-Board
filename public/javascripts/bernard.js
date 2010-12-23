@@ -266,7 +266,7 @@ function validateForm(){
 	}
 
 	if(returnVal != false){
-		returnVal = (new Function("validate" + jQuery('#type').val() + "();"))();
+		returnVal = (new Function("return validate" + jQuery('#type').val() + "();"))();
 	}
 
 	return returnVal;
